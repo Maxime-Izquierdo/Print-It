@@ -17,62 +17,59 @@ const slides = [
 	}
 ]
 
-let currentSlide = 0;
+let currentSlide = 0;                                            // Initialise l'index de la diapositive actuelle à 0 (la première diapositive)
 
-const bannerImg = document.querySelector('#banner .banner-img');
-const bannerTagline = document.querySelector('#banner p');
-const dotsContainer = document.querySelector('#banner .dots'); // Sélection du conteneur de points de navigation
-const arrowLeft = document.querySelector('.arrow_left');
-const arrowRight = document.querySelector('.arrow_right');
+const bannerImg = document.querySelector('#banner .banner-img'); // Sélectionne l'image de la bannière du carrousel
+const bannerTagline = document.querySelector('#banner p');       // Sélectionne le texte associé à l'image de la bannière
+const dotsContainer = document.querySelector('#banner .dots');   // Sélectionne le conteneur des bullet points
+const arrowLeft = document.querySelector('.arrow_left');         // Sélectionne la flèche gauche
+const arrowRight = document.querySelector('.arrow_right');       // Sélectionne la flèche droite
 
-// Générer les bullet points dynamiquement
-slides.forEach((slide, index) => {
-	const dot = document.createElement('div');
-	dot.classList.add('dot');
-	if (index === 0) {
-		dot.classList.add('dot_selected');
+slides.forEach((slide, index) => {  							 // Génére les bullet points dynamiquement pour chaque diapositive dans le tableau slides
+	const dot = document.createElement('div'); 					 // Crée un nouvel élément div pour représenter un bullet point
+	dot.classList.add('dot'); 									 // Ajoute la classe 'dot' à l'élément div pour le styliser comme un bullet point
+	if (index === 0) {  										 // Si c'est le premier bullet point
+		dot.classList.add('dot_selected');                       // Ajoute la classe 'dot_selected' pour le mettre en surbrillance
 	}
-	dotsContainer.appendChild(dot);
+	dotsContainer.appendChild(dot); 							 // Ajoute le bullet point créé au conteneur de dots
 
-	dot.addEventListener('click', () => {
-		updateSlide(index);
+	dot.addEventListener('click', () => {  						 // Ajoute un event listener qui rend chaque bullet point cliquable
+		updateSlide(index);  	  								 // Met à jour la slide en fonction du bullet point cliqué
 	});
 });
 
 function updateSlide(index) {
-	currentSlide = index;
-	bannerImg.src = `./assets/images/slideshow/${slides[currentSlide].image}`;
-	bannerTagline.innerHTML = slides[currentSlide].tagLine;
+	currentSlide = index;													   // Met à jour l'index de la diapositive actuelle
+	bannerImg.src = `./assets/images/slideshow/${slides[currentSlide].image}`; // Met à jour la source de l'image de la bannière pour afficher l'image de la diapositive actuelle
+	bannerTagline.innerHTML = slides[currentSlide].tagLine;					   // Met à jour le texte de la bannière avec la tagline de la diapositive actuelle
 
 
-// Mettre à jour les bullet points
-const dots = document.querySelectorAll('.dot');
-dots.forEach((dot, i) => {
-	if (i === currentSlide) {
-		dot.classList.add('dot_selected');
-	} else {
-		dot.classList.remove('dot_selected');
+const dots = document.querySelectorAll('.dot');					// Sélectionne tous les bullet points
+dots.forEach((dot, i) => {										// Parcourt chaque bullet point
+	if (i === currentSlide) {									// Si le bullet point correspond à l'index de la diapositive actuelle
+		dot.classList.add('dot_selected');                      // Ajoute la classe 'dot_selected' pour le mettre en surbrillance
+	} else {													// Sinon
+		dot.classList.remove('dot_selected');					// Retire la classe 'dot_selected' pour le désélectionner
 	}
 });
 }
 
-arrowLeft.addEventListener('click', () => {
-	console.log('Flèche gauche cliquée'); // alert('Flèche gauche cliquée');
-	if (currentSlide > 0) {
-		updateSlide(currentSlide - 1);
-	} else {
-		updateSlide(slides.length - 1); // Aller à la dernière slide si on est sur la première
+arrowLeft.addEventListener('click', () => { 					// Ajoute un event listener à la flèche gauche pour permettre de naviguer vers la diapositive précédente
+	console.log('Flèche gauche cliquée'); 						// Alert('Flèche gauche cliquée');
+	if (currentSlide > 0) {										// Si l'index de la diapositive actuelle est supérieur à 0
+		updateSlide(currentSlide - 1); 							// Aller à la page précédente
+	} else {													// Sinon
+		updateSlide(slides.length - 1); 						// Aller à la dernière slide 
 	}
 });
 
-arrowRight.addEventListener('click', () => {
-	console.log('Flèche droite cliquée'); // alert('Flèche droite cliquée');
-	if (currentSlide < slides.length - 1) {
-		updateSlide(currentSlide + 1);
-	} else {
-		updateSlide(0); // Retourner à la première slide si on est sur la dernière
+arrowRight.addEventListener('click', () => {					// Ajoute un event listener à la flèche droite pour permettre de naviguer vers la diapositive suivante
+	console.log('Flèche droite cliquée'); 						// Alert('Flèche droite cliquée');
+	if (currentSlide < slides.length - 1) {						// Si l'index de la diapositive actuelle est inférieur à l'index de la dernière diapositive
+		updateSlide(currentSlide + 1); 							// Aller à la page suivante
+	} else {													// Sinon
+		updateSlide(0); 										// Retourner à la première slide si on est sur la dernière
 	}
 });
 
-// Initialiser la première slide
-updateSlide(0);
+updateSlide(0);													// Initialise la première diapositive à l'affichage de la page
